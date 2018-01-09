@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- if debug set to true, context info always print otherwise the contex
+   info will print when error occour -->
+<configuration scan="true" debug="false">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}
+                [%file:%line] - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+ 
+    <!-- 所有日志文件 -->
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/info.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}
+                [%file:%line] - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!--2016-07-13-han-add : just for scan error log clearly!-->
+    <appender name="ERROR-OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/error.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}
+                [%file:%line] - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/error.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <!--2016-07-13-add-han-just for test some Class or package
+    <logger name="com.vis.servlet.PhonePlayServlet" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING"/>
+    </logger>
+      <logger name="com.vis.servlet.PhoneUGCPlayListServlet" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING"/>
+    </logger>
+      <logger name="com.vis.servlet.PhoneUGCWxServlet" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING"/>
+    </logger>
+      <logger name="com.vis.servlet.PhoneUGCServlet" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING"/>
+    </logger>
+      <logger name="com.vis.servlet.PhoneUGCPlayListWxServlet" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLING"/>
+    </logger>
+-->
+ 
+    <root level="info">
+        <appender-ref ref="ROLLING"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ERROR-OUT"/>
+    </root>
+</configuration>
